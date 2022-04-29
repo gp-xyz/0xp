@@ -1,7 +1,7 @@
 class Bumpers{
     constructor(){
         this.bumperlist = [];
-        this.trih = 120; //bbumper height
+        this.trih = 80; //bbumper height
         this.pointh = 30;  //bumper point
         this.ystart =150; //topmargin
         this.hmps = 4; //bumpers per side

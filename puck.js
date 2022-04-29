@@ -3,7 +3,7 @@ class Puck{
         this.pegsobj = pegs;
         this.action = true;
         this.actcounter = 0;
-        this.c = color('lime');
+        this.c = color('blue');
         
         this.pos = createVector(x,y);
         if (x==0 && y==0){
@@ -14,20 +14,19 @@ class Puck{
         
         this.vel = createVector(0,0);
         this.acc = createVector(0,0);
-        this.pucksize=25;
+        this.pucksize=18;
         this.mybucket = -1;
 
     }
     show(){
         let offset = 2;
-        fill('black');
+
         noStroke();
-        circle(this.pos.x+offset,this.pos.y+offset,this.pucksize);
-        fill(this.c);
-        circle(this.pos.x,this.pos.y,this.pucksize);
+
         if (this.action)
         {
-            
+            fill('black');
+            circle(this.pos.x+offset,this.pos.y+offset,this.pucksize);
             
             // noStroke();
             // fill(color(255,200));
@@ -43,6 +42,23 @@ class Puck{
             //     circle(this.pos.x,this.pos.y,this.pucksize);
 
             // }
+        }
+        fill(this.c);
+        circle(this.pos.x,this.pos.y,this.pucksize);
+        let x=this.pos.x;
+        let y=this.pos.y;
+        let w=this.pucksize;
+        let hm=10;
+        for (let i=0;i<hm;i++)
+        {
+          noFill();
+          let botcol = color(map(i,0,hm,0,150),33);
+          let topcol = color(map(i,0,hm,150,255),33);
+          stroke(botcol);
+          arc(x,y,w-i-1,w-i-1,-10,170);
+          stroke(topcol)
+          arc(x,y,w-i-1,w-i-1,170,350);
+      
         }
     }
     move(){
@@ -74,7 +90,10 @@ class Puck{
             if (dist(this.pos.x,this.pos.y,peg1.x,peg1.y) < coldist){
                 let xforce = this.pos.x - peg1.x;
                 let yforce = this.pos.y - peg1.y;
-                let newforce = createVector(xforce/10,yforce/10)
+                if (xforce==0){
+                    xforce=random(-.1,.1);
+                }
+                let newforce = createVector(xforce/5,yforce/5)
                 this.changeDirection(newforce);
             }
         }
@@ -92,7 +111,7 @@ class Puck{
             if (dist(this.pos.x,this.pos.y,peg1.x,peg1.y) < 30){
                 let xforce = this.pos.x - peg1.x;
                 let yforce = this.pos.y - peg1.y;
-                let newforce = createVector(xforce/3,yforce/3)
+                let newforce = createVector(xforce/4,yforce/4)
                 this.changeDirection(newforce);
             }
         } 
@@ -106,7 +125,7 @@ class Puck{
         if(this.mybucket != -1 && bucketnum!=this.mybucket){
             this.action=false;
         }
-        else if (this.pos.y > buckets[0].y && this.action)
+        else if (this.pos.y > buckets[0].y &&  buckets[bucketnum].hit==false)
         {
 
             buckets[bucketnum].activate();
@@ -117,22 +136,7 @@ class Puck{
         if (this.pos.y>=height-this.pucksize){
             this.action=false;
         }
-        // for (let i=0;i<buckets.length;i++)
-        // {
-        //     if (this.action)
-        //     {
-        //         let buck = buckets[i];
-        //         let centerpoint = createVector(buck.x+buck.w/2,buck.y+50)
-        //         circle(centerpoint.x,centerpoint.y,10);
-        //         if (dist(this.pos.x,this.pos.y,centerpoint.x,centerpoint.y) < bkwid && (this.pos.y > this.pegsobj.bucketstart+this.pucksize/2)){
-        //             this.action=false;
-        //             // this.c = this.pegsobj.bucketlist[i].c1;
-        //             this.pegsobj.bucketlist[i].activate();
-        //         }
-        //     }
 
-
-        // }
 
     }
         

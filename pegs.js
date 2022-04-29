@@ -2,7 +2,7 @@
 class Pegs{
     constructor(bmpr){
         this.bmpr = bmpr;
-        this.pegsize=24;
+        this.pegsize=9;
         this.peglist = [];
         this.bucketlist = [];
         this.hc = 6;
@@ -69,18 +69,38 @@ class Pegs{
         let offsets = 2;
         for (let i=0;i<this.peglist.length;i++){
             let curpeg = this.peglist[i];
-            fill('black');
-            circle(curpeg.x+offsets,curpeg.y+offsets,this.pegsize);
+            // fill('black');
+            // circle(curpeg.x+offsets,curpeg.y+offsets,this.pegsize);
             fill('yellow');
             circle(curpeg.x,curpeg.y,this.pegsize);
 
+            let x=curpeg.x;
+            let y=curpeg.y;
+            let w=this.pegsize;
+            let hm=3;
+            for (let j=0;j<hm;j++)
+            {
+                noFill();
+                strokeWeight(2);
+                let botcol =color(map(j,0,hm,20,150),255);
+                let topcol = color(map(j,0,hm,150,255),255);
+                stroke(botcol);
+                arc(x,y,w-j,w-j,-10,170);
+                stroke(topcol)
+                arc(x,y,w-j,w-j,170,350);
+            }
+
         }
         // print(this.bucketlist);
+
+        // noLoop();
+    }
+    showbuckets(){
         for (let i=0;i<this.bucketlist.length;i++){
             this.bucketlist[i].show();
 
         }
-        // noLoop();
+
     }
 
 }
